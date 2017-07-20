@@ -12,7 +12,7 @@ char peakElevationGain; //Runtime elevation gain is computed using this and the 
 
 bool forwardDirection;
 bool upwardsDirection;
-
+//sdfsd
 char stripNum;
 char currentFrame;
 
