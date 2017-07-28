@@ -10,10 +10,10 @@ CRGB strip[NUMSTRIPS][STRIPLEN];
 char shapetail[3][TEMPNUMFRAMES];
 char shapehead[3][TEMPNUMFRAMES];
 CRGB trialshape[3][TEMPNUMFRAMES][TEMPSIZESHAPE];
-char shapefadedelay = 0;
-char shapespeeddelay = 0;
+unsigned short shapefadedelay = 0;
+unsigned short shapespeeddelay = 0;
 
-char temptimeout = 0;
+short temptimeout = 0;
 //TEMP
 
 Shape shapeBuffer[SIZESHAPEBUFFER];
@@ -49,10 +49,10 @@ void setup() {
   char c, i;
   for (i = 0; i < TEMPNUMFRAMES; i++) {
     for (c = 0; c < TEMPSIZESHAPE; c++) {
-      if (c < TEMPSIZESHAPE - 2) {//((255*2)/ TEMPNUMFRAMES)*(TEMPNUMFRAMES /2 - abs(TEMPNUMFRAMES /2 - c)) > 0) {//formula(c, i) > 0) {
-		  trialshape[0][i][c] = CHSV(10, 255, 200);// ((255 * 2) / TEMPNUMFRAMES)*(TEMPNUMFRAMES / 2 - abs(TEMPNUMFRAMES / 2 - c)));// formula(c, i) * 70);
-        trialshape[1][i][c] = CHSV(80, 255, 200);//((255 * 2) / TEMPNUMFRAMES)*(TEMPNUMFRAMES / 2 - abs(TEMPNUMFRAMES / 2 - c)));//formula(c, i) * 70);
-        trialshape[2][i][c] = CHSV(190, 255, 200);//((255 * 2) / TEMPNUMFRAMES)*(TEMPNUMFRAMES / 2 - abs(TEMPNUMFRAMES / 2 - c)));//formula(c, i) * 70);
+      if (((255 * 2) / TEMPNUMFRAMES)*(TEMPNUMFRAMES / 2 - abs(TEMPNUMFRAMES / 2 - c)) - 15 * i > 0){
+		  trialshape[0][i][c] = CHSV(10, 255, ((255 * 2) / TEMPNUMFRAMES)*(TEMPNUMFRAMES / 2 - abs(TEMPNUMFRAMES / 2 - c)) - 15 * i);// formula(c, i) * 70);
+        trialshape[1][i][c] = CHSV(80, 255, ((255 * 2) / TEMPNUMFRAMES)*(TEMPNUMFRAMES / 2 - abs(TEMPNUMFRAMES / 2 - c)) - 15 * i);//formula(c, i) * 70);
+        trialshape[2][i][c] = CHSV(190, 255, ((255 * 2) / TEMPNUMFRAMES)*(TEMPNUMFRAMES / 2 - abs(TEMPNUMFRAMES / 2 - c)) - 15 * i);//formula(c, i) * 70);
       }
       else {
         trialshape[0][i][c] = CHSV(0, 0, 0);
@@ -71,6 +71,8 @@ void setup() {
 }
 
 void loop() {
+	if(temptimeout == TEMPSIZESHAPE + 2)
+		Serial.println("new");
     //char c, i;
     //for (i = 0; i < TEMPNUMFRAMES; i++) {
     //  for (c = 0; c < TEMPSIZESHAPE; c++) {
@@ -118,16 +120,24 @@ void loop() {
           if (shapeBuffer[currentShape].currentFrame == TEMPNUMFRAMES - 1) shapeBuffer[currentShape].upwardsDirection = false;
         }
         else if (!shapeBuffer[currentShape].upwardsDirection && shapeBuffer[currentShape].currentFrame > 0) shapeBuffer[currentShape].currentFrame--;
-        else shapeBuffer[currentShape].shapeEnabled = false;
+		else {
+			shapeBuffer[currentShape].shapeEnabled = false;
+			Serial.println("Burninated");
+		}
       }
       shapefadedelay = (shapefadedelay + 1) % FADEIMPEDEMENT;
-      if (!(shapespeeddelay % SPEEDIMPEDEMENT)) {
-        if (shapeBuffer[currentShape].forwardDirection) {
-          shapeBuffer[currentShape].topPointLocation++;
-          if (shapeBuffer[currentShape].topPointLocation - shapetail[shapeBuffer[currentShape].baseShape][shapeBuffer[currentShape].currentFrame] >= STRIPLEN)
-            shapeBuffer[currentShape].shapeEnabled = false;
-        }
-      }
+	  if (!(shapespeeddelay % SPEEDIMPEDEMENT)) {
+		  if (shapeBuffer[currentShape].forwardDirection) {
+			  shapeBuffer[currentShape].topPointLocation++;
+			  if (shapeBuffer[currentShape].topPointLocation - shapetail[shapeBuffer[currentShape].baseShape][shapeBuffer[currentShape].currentFrame] >= STRIPLEN) {
+			  shapeBuffer[currentShape].shapeEnabled = false;
+			  Serial.println("Burninated");
+			}
+			  //Serial.println(shapeBuffer[currentShape].topPointLocation);
+		  }
+		  if (temptimeout > 0) temptimeout--;
+		//  Serial.println((int)temptimeout);
+	  }
     }
     shapespeeddelay = (shapespeeddelay + 1) % SPEEDIMPEDEMENT;
     //TEMP
@@ -154,7 +164,6 @@ void grabSerial() {
   //    buffer += inByte;
   //    inByte = Serial.read(); // Read the incoming byte.
   //  }
-	if (temptimeout > 0) temptimeout--;
 
 	rng = random(0, 5000);
 	if (rng < (5000 * MAXFAKEOUTRATE) / (1000000 / PING_RATE) && temptimeout == 0) { //rngmax times rate/s divided by revs/s
@@ -168,7 +177,7 @@ void grabSerial() {
                                          1, //TEMP peak velocity, compute it somehow
                                          1, //TEMP peak elevation gain, compute it somehow
                                          1); //TEMPforward direction, compute it somehow
-	temptimeout = TEMPSIZESHAPE  + 40;
+	temptimeout = TEMPSIZESHAPE  + 2;
 	}
   //}
 }
