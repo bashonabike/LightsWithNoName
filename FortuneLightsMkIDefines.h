@@ -6,7 +6,7 @@
 #define STRIPLEN 300
 #define SIZEOFCRGB 3
 
-#define SIZESHAPEBUFFER 30
+#define SIZESHAPEBUFFER 20
 //100
 
 //////////TEMP/////////////
@@ -17,11 +17,11 @@
 #define C 4 
 #define formula(c, i) (A*c - (7 * (TEMPNUMFRAMES - i) - C)) 
 
-#define FADEIMPEDEMENT 560
-#define SPEEDIMPEDEMENT 300
+#define FADEIMPEDEMENT 14
+#define SPEEDIMPEDEMENT 2
 
-#define MAXFAKEOUTRATE 2
+#define MAXFAKEOUTRATE .2
 //////////TEMP/////////////
 
-#define PING_RATE 1000000
+#define PING_RATE 500000
 //1000 //us
