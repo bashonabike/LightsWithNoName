@@ -10,17 +10,19 @@
 //100
 
 //////////TEMP/////////////
-#define TEMPSIZESHAPE 20
-#define TEMPNUMFRAMES 14
-#define A 3
-#define B 3.2 
-#define C 4 
-#define formula(c, i) (A*c - (7 * (TEMPNUMFRAMES - i) - C)) 
+#define TEMPSIZESHAPE 14
+#define TEMPNUMFRAMES 30
+#define A 1.8
+#define B 0.35
+#define C 8 
+#define D 15
+#define formula(p, f) (int)((-1)*A*(p - B*TEMPSIZESHAPE)*(p - B*TEMPSIZESHAPE) + C*f + D)
+//f is the frame, p is the position
 
-#define FADEIMPEDEMENT 14
+#define FADEIMPEDEMENT 6
 #define SPEEDIMPEDEMENT 2
 
-#define MAXFAKEOUTRATE .2
+#define MAXFAKEOUTRATE .3
 //////////TEMP/////////////
 
 #define PING_RATE 500000
