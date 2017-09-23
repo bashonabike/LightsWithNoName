@@ -7,10 +7,14 @@
 CRGB strip[NUMSTRIPS][STRIPLEN];
 
 //TEMP
-char shapetail[3][TEMPNUMFRAMES];
-char shapehead[3][TEMPNUMFRAMES];
-CRGB trialshape[3][TEMPNUMFRAMES][TEMPSIZESHAPE];
-char trialShapeFrameRate[3];
+//TODO: get it going so only memcpys over the non-0 bits
+//char shapetail[3][TEMPNUMFRAMES];
+//char shapehead[3][TEMPNUMFRAMES];
+CRGB blueice[25][18];
+CRGB purplerain[30][9];
+CRGB antibluemeetspurple[8][4];
+CRGB antipurplemeetsblue[8][4];
+
 unsigned short shapefadedelay = 0;
 
 bool tempTurnoff = false;
@@ -84,9 +88,9 @@ void setup() {
 		shapetail[1][i] = TEMPSIZESHAPE - 1;
 		shapetail[2][i] = TEMPSIZESHAPE - 1;
 	}
-	trialShapeFrameRate[0] = 1;
+	trialShapeFrameRate[0] = 3;
 	trialShapeFrameRate[1] = 2;
-	trialShapeFrameRate[2] = 3;
+	trialShapeFrameRate[2] = 1;
 	//TEMP
 }
 
@@ -114,7 +118,10 @@ void loop() {
 				effShapeSize * SIZEOFCRGB);
 
 			if (!(shapefadedelay % FADEIMPEDEMENT)) {
+				/*if (shapeBuffer[currentShape].currentFrame = 29) {
 				for (int d = 0; d < TEMPSIZESHAPE; d++) {
+					Serial.print((int)shapeBuffer[currentShape].baseShape);
+					Serial.print("..");
 					Serial.print((int)shapeBuffer[currentShape].currentFrame);
 					Serial.print(", ");
 					Serial.print(d);
@@ -125,6 +132,7 @@ void loop() {
 					Serial.print(",");
 					Serial.println(trialshape[shapeBuffer[currentShape].baseShape][shapeBuffer[currentShape].currentFrame][d].b);
 				}
+			}*/
 
 				//if (currentShape % 4 == 0) {
 			/*		Serial.print((int)currentShape);
@@ -133,7 +141,7 @@ void loop() {
 			//	}
 				//  Serial.println((int)shapeBuffer[currentShape].currentFrame);
 				  //TODO: wtf why is the final frame glitching out???
-				if (shapeBuffer[currentShape].upwardsDirection && shapeBuffer[currentShape].currentFrame >= TEMPNUMFRAMES - 2) {
+				if (shapeBuffer[currentShape].upwardsDirection && shapeBuffer[currentShape].currentFrame >= TEMPNUMFRAMES - 1) {
 					//Serial.println(trialshape[2][shapeBuffer[currentShape].currentFrame][5].b);
 					shapeBuffer[currentShape].upwardsDirection = false;
 					// if (shapeBuffer[currentShape].baseShape == 2) 
@@ -186,7 +194,7 @@ void grabSerial() {
 
 	rng = random(0, 5000);
 	if (rng < (5000 * MAXFAKEOUTRATE) / (1000000 / PING_RATE)) {//&& temptimeout == 0) { //rngmax times rate/s divided by revs/s
-		shapeType =  random(0, 3);
+		shapeType =  random(0, 2);
 		shapeBufferTop = (shapeBufferTop + 1) % SIZESHAPEBUFFER;
 		shapeBuffer[shapeBufferTop].newShape(shapeType,
 			0, //TEMP shape variant, compute it somehow
