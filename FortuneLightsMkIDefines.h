@@ -10,8 +10,8 @@
 //100
 
 //////////TEMP/////////////
-#define TEMPSIZESHAPE 14
-#define TEMPNUMFRAMES 30
+#define TEMPSIZESHAPE 9
+#define TEMPNUMFRAMES 24
 #define A 1.8
 #define B 0.35
 #define C 8 

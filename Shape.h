@@ -9,7 +9,7 @@ short topPointLocation;
 
 bool forwardDirection;
 bool upwardsDirection;
-//sdfsd
+
 char stripNum;
 char currentFrame;
 
