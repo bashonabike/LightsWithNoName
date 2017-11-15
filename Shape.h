@@ -1,5 +1,7 @@
+#pragma once
 #ifndef Shape_H
-#define Bolt_H
+#define Shape_H
+
 class Shape {
 public:
 char baseShape;
@@ -15,6 +17,9 @@ char currentFrame;
 
 bool shapeEnabled;
 
+
+
+
 Shape ();
 void newShape (char newBaseShape,
               char newShapeVariant,
@@ -22,5 +27,6 @@ void newShape (char newBaseShape,
               short newTopPointLocation,
               bool newForwardDirection);
 void deleteShape ();
+short countdown(char width, char rate);
 };
 #endif

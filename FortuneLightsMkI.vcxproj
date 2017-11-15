@@ -87,10 +87,12 @@
     <ClInclude Include="Shape.h">
       <FileType>CppCode</FileType>
     </ClInclude>
+    <ClInclude Include="ShapeType.h" />
     <ClInclude Include="__vm\.FortuneLightsMkI.vsarduino.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Shape.cpp" />
+    <ClCompile Include="ShapeType.cpp" />
   </ItemGroup>
   <PropertyGroup>
     <DebuggerFlavor>VisualMicroDebugger</DebuggerFlavor>

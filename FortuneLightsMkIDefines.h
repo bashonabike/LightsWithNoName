@@ -1,3 +1,5 @@
+#pragma once
+
 #define PIN1 3
 #define PIN2 6
 #define PIN3 9
@@ -7,6 +9,7 @@
 #define SIZEOFCRGB 3
 
 #define SIZESHAPEBUFFER 20
+#define NUMSHAPETYPES 4
 //100
 
 //////////TEMP/////////////

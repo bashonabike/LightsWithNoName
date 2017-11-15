@@ -30,9 +30,15 @@
     <ClInclude Include="c:\Program Files (x86)\Arduino\hardware\teensy\avr\cores\teensy3\Arduino.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ShapeType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Shape.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ShapeType.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

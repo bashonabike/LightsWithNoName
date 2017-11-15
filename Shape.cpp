@@ -1,4 +1,5 @@
 #include "Shape.h"
+#include "ShapeType.h"
 #include "FortuneLightsMkIDefines.h"
 
 Shape::Shape () {
@@ -27,3 +28,10 @@ void Shape::deleteShape () {
   shapeEnabled = false;
 }
 
+short Shape::countdown(char width, char rate) {
+	//TODO figure out convergence point of which happens first, falls below surface or falls out of frame of view
+	if (upwardsDirection)
+		return (2 * width - 1) - currentFrame;  
+	else
+		return currentFrame;
+}
