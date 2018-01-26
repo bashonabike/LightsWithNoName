@@ -35,3 +35,10 @@ short Shape::countdown(char width, char rate) {
 	else
 		return currentFrame;
 }
+
+void Shape::addIntercepts(char frames[], char interceptingShapeTypes[], char numIntercepts) {
+	intercepts = new Intercept[numIntercepts];
+	for (char c = 0; c < numIntercepts; c++) {
+		intercepts[c].newIntercept(frames[c], interceptingShapeTypes[c]);
+	}
+}

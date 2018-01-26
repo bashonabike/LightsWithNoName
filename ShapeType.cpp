@@ -14,19 +14,19 @@ ShapeType::ShapeType(char newShapeType) {
 	case 0: //Blue Ice
 		length = 18;
 		numframes = 25;
-		rate = 2;
+		framerate = 2;
 	case 1: //Purple Rain
 		length = 9;
 		numframes = 24;
-		rate = 1;
+		framerate = 1;
 	case 2: //Blue meets Purple
 		length = 8;
 		numframes = 16;
-		rate = 2;
+		framerate = 2;
 	case 3: //Purple meets Blue
 		length = 8;
 		numframes = 16;
-		rate = 1;
+		framerate = 1;
 	}
 	data = new CRGB*[length];
 	for (char i = 0; i < length; i++) {

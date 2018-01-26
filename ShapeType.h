@@ -8,7 +8,7 @@ public:
 	char shapetype;
 	char length;
 	char numframes;
-	char rate;
+	char framerate; //is frames per increment of movement
 	CRGB **data;
 
 	ShapeType();

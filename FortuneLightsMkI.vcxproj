@@ -84,6 +84,7 @@
     <ClInclude Include="FortuneLightsMkIDefines.h">
       <FileType>CppCode</FileType>
     </ClInclude>
+    <ClInclude Include="Intercept.h" />
     <ClInclude Include="Shape.h">
       <FileType>CppCode</FileType>
     </ClInclude>
@@ -91,6 +92,7 @@
     <ClInclude Include="__vm\.FortuneLightsMkI.vsarduino.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Intercept.cpp" />
     <ClCompile Include="Shape.cpp" />
     <ClCompile Include="ShapeType.cpp" />
   </ItemGroup>

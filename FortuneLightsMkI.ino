@@ -16,7 +16,7 @@ CRGB purplerain[24][9];
 CRGB antibluemeetspurple[16][8];
 CRGB antipurplemeetsblue[16][8];
 
-ShapeType shapeTypes [NUMSHAPETYPES];
+ShapeType shapeTypes[NUMSHAPETYPES];
 
 unsigned short shapefadedelay = 0;
 
@@ -41,6 +41,7 @@ char currentShape, shapesRenderedCount;
 short rng;
 
 void grabSerial();
+void findIntercepts(Shape newShape);
 //Loop-specific variables
 short localShapeBufferTop = 0;
 char localShapeType = 0;
@@ -138,7 +139,7 @@ void loop() {
 				}
 			}
 			if (shapeBuffer[currentShape].forwardDirection) {
-				if (!(frameRateCounter % shapeTypes[shapeBuffer[currentShape].baseShape].rate))
+				if (!(frameRateCounter % shapeTypes[shapeBuffer[currentShape].baseShape].framerate))
 					shapeBuffer[currentShape].topPointLocation++;
 				if (shapeBuffer[currentShape].topPointLocation - (shapeTypes[shapeBuffer[currentShape].baseShape].length - 1) >= STRIPLEN - 1) {
 					shapeBuffer[currentShape].shapeEnabled = false;
@@ -182,21 +183,38 @@ void grabSerial() {
 			0, //TEMP starter depth, compute it somehow
 			0, //random(0, STRIPLEN - 1), //TEMP top of peak location, compute it somehow
 			1); //TEMPforward direction, compute it somehow
-
-		//Search for bolts that it will will run into at some point
-		//TODO sorting algorithm?? store a seperate indexed list ordered by proximity?
-		for (char c = 0; c < SIZESHAPEBUFFER; c++) {
-			if (shapeTypes[shapeBuffer[c].baseShape].rate < shapeTypes[shapeBufferTop].rate) {
-				//Cross-multiplied! Clever clever
-				if (shapeTypes[shapeBufferTop].rate*shapeBuffer[c].topPointLocation > 6/*random number to get it to build lol*/) {}
-					//TODO figure out which ones it'll intercept with.  Create new INTERCEPT in Shape class
-			}
-			else if (shapeTypes[shapeBuffer[c].baseShape].rate > shapeTypes[shapeBufferTop].rate) {
-
-			}
-		}
+		findIntercepts(shapeBuffer[shapeBufferTop]);
 
 
 	}
 	//}
 }
+
+void findIntercepts(Shape newShape) {
+	//Search for bolts that it will will run into at some point
+	//TODO: get it working for bolts starting midway thru the strand
+	//TODO sorting algorithm?? store a seperate indexed list ordered by proximity?
+	char interceptFrames[SIZESHAPEBUFFER];
+	char interceptShapes[SIZESHAPEBUFFER];
+	char interceptIndex = 0;
+	short calcFrames = 0;
+	for (char c = 0; c < SIZESHAPEBUFFER; c++) {
+		//If old shape is slower than the new one (remember high rate means slow)
+		if (shapeTypes[shapeBuffer[c].baseShape].framerate > shapeTypes[newShape.baseShape].framerate) {
+			//NOTE that this only identifies when the intercept will occur ish.  Once it happens, check every cycle where the intercepting shape is at and evauluate what to do in the moment
+			//if (top-len)*delta rate < end - (top-len)*rate2 then covers all bases for it catching up
+			calcFrames = (shapeBuffer[c].topPointLocation - shapeTypes[shapeBuffer[c]].length)*
+				(shapeTypes[shapeBuffer[c].baseShape].framerate - shapeTypes[newShape.baseShape].framerate);
+			if (calcFrames < (STRIPLEN - (shapeBuffer[c].topPointLocation - shapeTypes[shapeBuffer[c]].length))*shapeTypes[shapeBuffer[c].baseShape].framerate &&
+				calcFrames <= shapeTypes[newShape.baseShape].numframes && calcFrames <= shapeTypes[shapeBuffer[c].baseShape].numframes - shapeBuffer[c].currentFrame) {
+					interceptFrames[interceptIndex] = calcFrames;
+					interceptShapes[interceptIndex] = c;
+					interceptIndex++;
+				}
+			}
+		}
+		//else if (shapeTypes[shapeBuffer[c].baseShape].framerate > shapeTypes[shapeBufferTop].framerate) {
+
+		//}
+	newShape.addIntercepts(interceptFrames, interceptShapes, interceptIndex);
+	}

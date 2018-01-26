@@ -1,6 +1,7 @@
 #pragma once
 #ifndef Shape_H
 #define Shape_H
+#include "Intercept.h"
 
 class Shape {
 public:
@@ -15,9 +16,9 @@ bool upwardsDirection;
 char stripNum;
 char currentFrame;
 
+Intercept* intercepts;
+
 bool shapeEnabled;
-
-
 
 
 Shape ();
@@ -28,5 +29,6 @@ void newShape (char newBaseShape,
               bool newForwardDirection);
 void deleteShape ();
 short countdown(char width, char rate);
+void addIntercepts(char frames[], char interceptingShapeTypes[], char numIntercepts);
 };
 #endif
