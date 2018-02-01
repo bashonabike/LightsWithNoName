@@ -4,15 +4,15 @@
 
 class Intercept {
 public:
-	char interceptFrame;
-	char interceptingShape;
+	unsigned char interceptFrame;
+	unsigned char interceptingShape;
 	bool fired;
 
 	Intercept();
-	Intercept(char newInterceptFrame,
-		char newInterceptingShape);
-	void newIntercept(char newInterceptFrame,
-		char newInterceptingShape);
+	Intercept(unsigned char newInterceptFrame,
+		unsigned char newInterceptingShape);
+	void newIntercept(unsigned char newInterceptFrame,
+		unsigned char newInterceptingShape);
 	void deleteIntercept();
 };
 #endif

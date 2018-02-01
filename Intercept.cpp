@@ -4,13 +4,13 @@
 Intercept::Intercept() {
 } //initial constructor
 
-Intercept::Intercept(char newInterceptFrame,
-	char newInterceptingShape) {
+Intercept::Intercept(unsigned char newInterceptFrame,
+	unsigned char newInterceptingShape) {
 	newIntercept(newInterceptFrame, newInterceptingShape);
 } //actual constructor
 
-void Intercept::newIntercept(char newInterceptFrame,
-	char newInterceptingShape) { // constructor code
+void Intercept::newIntercept(unsigned char newInterceptFrame,
+	unsigned char newInterceptingShape) { // constructor code
 	interceptFrame = newInterceptFrame;
 	interceptingShape = newInterceptingShape;
 	fired = false;

@@ -5,30 +5,30 @@
 
 class Shape {
 public:
-char baseShape;
-char shapeVariant;
-char currentDepth;
+unsigned char baseShape;
+unsigned char shapeVariant;
+unsigned char currentDepth;
 short topPointLocation;
 
 bool forwardDirection;
 bool upwardsDirection;
 
-char stripNum;
-char currentFrame;
+unsigned char stripNum;
+unsigned char currentFrame;
 
-Intercept* intercepts;
+//Intercept* intercepts;
 
 bool shapeEnabled;
 
 
 Shape ();
-void newShape (char newBaseShape,
-              char newShapeVariant,
-              char newCurrentDepth,
+void newShape (unsigned char newBaseShape,
+              unsigned char newShapeVariant,
+              unsigned char newCurrentDepth,
               short newTopPointLocation,
               bool newForwardDirection);
 void deleteShape ();
-short countdown(char width, char rate);
-void addIntercepts(char frames[], char interceptingShapeTypes[], char numIntercepts);
+short countdown(unsigned char width, unsigned char rate);
+//void addIntercepts(unsigned char frames[], unsigned char interceptingShapeTypes[], unsigned char numIntercepts);
 };
 #endif

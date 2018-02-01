@@ -5,14 +5,14 @@
 
 class ShapeType {
 public:
-	char shapetype;
-	char length;
-	char numframes;
-	char framerate; //is frames per increment of movement
+	unsigned char shapetype;
+	unsigned char length;
+	unsigned char numframes;
+	unsigned char framerate; //is frames per increment of movement
 	CRGB **data;
 
 	ShapeType();
-	ShapeType(char newShapeType);
-	void instanciate(char newShapeType);
+	ShapeType(unsigned char newShapeType);
+	void instanciate(unsigned char newShapeType);
 };
 #endif
